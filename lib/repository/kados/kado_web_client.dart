@@ -31,13 +31,13 @@ class KadoWebClient implements KadosRepository {
                 '2',
               ),
               TitleKadoEntity(
-                'Book flights to Egypt',
+                'Title Only',
                 '',
                 '3',
               ),
               TitleKadoEntity(
-                'Decide on accommodation',
                 '',
+                'Body Only',
                 '4',
               ),
               TitleKadoEntity(
@@ -54,6 +54,18 @@ class KadoWebClient implements KadosRepository {
                 '2',
                 true,
                 '7',
+              ),
+              SentenceKadoEntity(
+                ['1','2','1'],
+                '',
+                false,
+                '8',
+              ),
+              SentenceKadoEntity(
+                ['1','3','1'],
+                'this one has been learned',
+                true,
+                '9',
               ),
             ]);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaijin_bloc/widgets/kados/sentence_kado_item.dart';
 
 import '../models/kado.dart';
 import '../widgets/widgets.dart';
@@ -36,6 +37,8 @@ class LessonDetailsPage extends StatelessWidget {
                         return TitleKadoItem(kado: kado);
                       else if (kado is VocabKado)
                         return VocabKadoItem(kado: kado);
+                      else if (kado is SentenceKado)
+                        return SentenceKadoItem(kado: kado);
                       else
                         return Container(child: Text('you never should have come here!'),);
                     },

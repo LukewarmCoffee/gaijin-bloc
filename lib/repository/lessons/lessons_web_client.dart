@@ -27,12 +27,12 @@ class LessonsWebClient implements LessonsRepository {
               ),
               LessonEntity(
                 'Lesson 2',
-                ['3', '5'],
+                ['3', '4', '5'],
                 '2',
               ),
               LessonEntity(
                 'Lesson 3',
-                ['1', '6', '7'],
+                ['6', '7', '8', '9'],
                 '3',
               ),
             ]);

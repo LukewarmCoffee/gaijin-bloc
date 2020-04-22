@@ -20,7 +20,7 @@ void main() {
           create: (context) => KadosBloc(
             kadosRepository: const KadoConcreteRepository(
               localStorage: const KadoFileStorage(
-                '__kado1__',
+                '__kad2__',
                 getApplicationDocumentsDirectory,
               ),
             ),
@@ -30,7 +30,7 @@ void main() {
           create: (context) => WordsBloc(
             wordsRepository: const WordConcreteRepository(
               localStorage: const WordFileStorage(
-                '__word1__',
+                '__word2__',
                 getApplicationDocumentsDirectory,
               ),
             ),
@@ -40,7 +40,7 @@ void main() {
           create: (context) => LessonsBloc(
             lessonsRepository: const LessonsConcreteRepository(
               localStorage: const LessonsFileStorage(
-                '__lesson1__',
+                '__lesson2__',
                 getApplicationDocumentsDirectory,
               ),
             ),

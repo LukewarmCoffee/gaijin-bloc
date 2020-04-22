@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../repository/kados/kado_entity.dart';
 
 abstract class Kado extends Equatable {
-  String get id; //not sure if ok
+  String get id; 
   KadoEntity toEntity();
 
   Kado();
@@ -15,6 +15,8 @@ abstract class Kado extends Equatable {
       return TitleKado.fromEntity(entity);
     else if (entity is VocabKadoEntity)
       return VocabKado.fromEntity(entity);
+    else if (entity is SentenceKadoEntity)
+      return SentenceKado.fromEntity(entity);
     else
       return Kado.fromEntity(entity); //shouldnt happen
   }
@@ -26,10 +28,11 @@ class TitleKado extends Kado {
   final String subtitle;
 
   TitleKado({
-    @required this.title,
+    String title,
     String subtitle,
     String id,
-  })  : this.subtitle = subtitle ?? '',
+  })  : this.title = title ?? '',
+   this.subtitle = subtitle ?? '',
         this.id = id ?? Uuid().v4();
 
   @override
@@ -53,6 +56,7 @@ class TitleKado extends Kado {
 class VocabKado extends Kado {
   //the word to be learned
   final String wordId;
+  //if true, displays a review instead of a new vocab
   final bool learned;
   final String id;
 
@@ -81,66 +85,38 @@ class VocabKado extends Kado {
 }
 
 
-//Special card; user decides whether they understand the card or not
-//displays a word, in japanese, user asked for word in english
-/*class ReviewKado extends Kado {
-  //the word to be learned
-  final String wordId;
+
+class SentenceKado extends Kado {
+  final List<String> wordIds;
+  //an optional natural translation for the sentence
+  final String translation;
+  final bool learned;
   final String id;
 
-  ReviewKado({
-    @required this.wordId,
+  SentenceKado({
+    @required this.wordIds,
+    String translation,
+    bool learned,
     String id,
-  }) : this.id = id ?? Uuid().v4();
+  }) : this.translation = translation ?? '', 
+  this.learned = learned ?? false,
+  this.id = id ?? Uuid().v4();
 
-  @override
-  List<Object> get props => [wordId, id];
+ @override
+  List<Object> get props => [wordIds, translation, learned, id];
 
-  static VocabKado fromEntity(VocabKadoEntity entity) {
-    return VocabKado(
-      wordId: entity.wordId,
+  static SentenceKado fromEntity(SentenceKadoEntity entity) {
+    return SentenceKado(
+      wordIds: entity.wordIds,
+      translation: entity.translation,
+      learned: entity.learned,
       id: entity.id ?? Uuid().v4(),
     );
   }
 
   @override
   KadoEntity toEntity() {
-    return VocabKadoEntity(wordId, id);
+    return SentenceKadoEntity(wordIds, translation, learned, id);
   }
-}*/
 
-/*@HiveType(typeId: 51)
-class BodyCard extends ContentCard {
-  @override
-  @HiveField(0)
-  final bool hidden;
-  @HiveField(1)
-  final String body;
-
-  BodyCard(
-    this.hidden, {
-    @required this.body,
-  });
-}*/
-
-
-/*
-//user decides if they understand the translation in english or not,
-@HiveType(typeId: 54)
-class SentenceReviewCard extends ContentCard {
-  @override
-  @HiveField(0)
-  final bool hidden;
-  //ids of all the words in the sentence
-  @HiveField(1)
-  final HiveList<Word> words;
-  //an optional natural translation for the sentence
-  @HiveField(2)
-  final String translation;
-
-  SentenceReviewCard(
-    this.hidden, {
-    @required this.words,
-    this.translation,
-  });
-}*/
+}
