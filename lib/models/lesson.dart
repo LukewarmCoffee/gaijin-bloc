@@ -13,7 +13,7 @@ class Lesson extends Equatable {
   Lesson({
     @required this.title,
     @required this.kadoIds,
-    int progress,
+    int progress = 0,
     String id,
   }) : this.progress = progress ?? 0, 
   this.id = id ?? Uuid().v4();
@@ -27,14 +27,13 @@ class Lesson extends Equatable {
     );
   }
 
-
    @override
   List<Object> get props =>
       [title, kadoIds, progress, id];
 
   @override
   String toString() {
-    return 'Lesson { title: $title, cardIds: $kadoIds, progres: $progress, id: $id }';
+    return 'Lesson { title: $title, kadoIds: $kadoIds , progress: $progress, id: $id }';
   }
 
   LessonEntity toEntity() {
@@ -44,8 +43,8 @@ class Lesson extends Equatable {
   static Lesson fromEntity(LessonEntity entity) {
     return Lesson(
       title: entity.title,
-      kadoIds: entity.cardIds,
-      progress: entity.progress,
+      kadoIds: entity.kadoIds,
+      progress: entity.progress ?? 0,
       id: entity.id ?? Uuid().v4(),
     );
   }

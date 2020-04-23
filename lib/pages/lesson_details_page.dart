@@ -18,12 +18,12 @@ class LessonDetailsPage extends StatefulWidget {
 }
 
 class _LessonDetailsPageState extends State<LessonDetailsPage> {
-   PageController _pageController;
+  PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage:  widget.lesson.progress);
+    _pageController = PageController(initialPage: widget.lesson.progress);
   }
 
   @override
@@ -51,6 +51,7 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
                 ? Container()
                 : PageView.builder(
                     controller: _pageController,
+                    physics: NeverScrollableScrollPhysics(),
                     onPageChanged: widget.setProgress,
                     itemCount: kados.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -62,9 +63,16 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
                       else if (kado is SentenceKado)
                         return SentenceKadoItem(kado: kado);
                       else
-                        return Container(child: Text('you never should have come here!'),);
+                        return Container(
+                          child: Text('you never should have come here!'),
+                        );
                     },
                   ),
+            floatingActionButton: FloatingActionButton(
+              child: Text('next'),
+              onPressed: () => _pageController.nextPage(
+                  duration: Duration(milliseconds: 100), curve: Curves.easeIn),
+            ),
           );
         } else {
           return Container();

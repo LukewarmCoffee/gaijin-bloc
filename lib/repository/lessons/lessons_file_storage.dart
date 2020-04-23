@@ -29,7 +29,7 @@ class LessonsFileStorage implements LessonsRepository {
   @override
   Future<File> saveLessons(List<LessonEntity> lessons) async {
     final file = await _getLocalFile();
-
+    print('saving to local..');
     return file.writeAsString(JsonEncoder().convert({
       'lessons': lessons.map((lesson) => lesson.toJson()).toList(),
     }));
@@ -37,7 +37,7 @@ class LessonsFileStorage implements LessonsRepository {
 
   Future<File> _getLocalFile() async {
     final dir = await getDirectory();
-
+    print('getting local file..');
     return File('${dir.path}/GaijinAppStorage__$tag.json');
   }
 

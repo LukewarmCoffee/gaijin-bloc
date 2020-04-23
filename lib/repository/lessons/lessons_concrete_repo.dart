@@ -26,7 +26,7 @@ class LessonsConcreteRepository implements LessonsRepository {
       return await localStorage.loadLessons();
     } catch (e) {
       final lessons = await webClient.loadLessons();
-
+      print('couldnt load local');
       await localStorage.saveLessons(lessons);
 
       return lessons;

@@ -22,7 +22,7 @@ class LessonsWebClient implements LessonsRepository {
         () => [
               LessonEntity(
                 'Lesson 1',
-                ['1', '2'],
+                ["1", "2"],
                 0,
                 '1',
               ),

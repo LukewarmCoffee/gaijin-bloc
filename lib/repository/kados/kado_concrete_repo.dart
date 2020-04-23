@@ -25,7 +25,7 @@ class KadoConcreteRepository implements KadosRepository {
       return await localStorage.loadKados();
     } catch (e) {
       final kados = await webClient.loadKados();
-
+      print('coiunt load kados');
       await localStorage.saveKados(kados);
 
       return kados;

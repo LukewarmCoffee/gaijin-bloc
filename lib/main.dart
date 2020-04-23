@@ -16,6 +16,16 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<LessonsBloc>(
+          create: (context) => LessonsBloc(
+            lessonsRepository: const LessonsConcreteRepository(
+              localStorage: const LessonsFileStorage(
+                '__lessson13__',
+                getApplicationDocumentsDirectory,
+              ),
+            ),
+          )..add(LoadLessons()),
+        ),
         BlocProvider<KadosBloc>(
           create: (context) => KadosBloc(
             kadosRepository: const KadoConcreteRepository(
@@ -30,21 +40,11 @@ void main() {
           create: (context) => WordsBloc(
             wordsRepository: const WordConcreteRepository(
               localStorage: const WordFileStorage(
-                '__word2__',
+                '__word9__',
                 getApplicationDocumentsDirectory,
               ),
             ),
           )..add(LoadWords()),
-        ),
-        BlocProvider<LessonsBloc>(
-          create: (context) => LessonsBloc(
-            lessonsRepository: const LessonsConcreteRepository(
-              localStorage: const LessonsFileStorage(
-                '__lesson3__',
-                getApplicationDocumentsDirectory,
-              ),
-            ),
-          )..add(LoadLessons()),
         ),
       ],
       child: GaijinApp(),

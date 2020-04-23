@@ -25,7 +25,7 @@ class WordConcreteRepository implements WordsRepository {
       return await localStorage.loadWords();
     } catch (e) {
       final words = await webClient.loadWords();
-
+      print('copuldnt read local words');
       await localStorage.saveWords(words);
 
       return words;

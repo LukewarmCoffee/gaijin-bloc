@@ -127,7 +127,7 @@ class SentenceKadoEntity extends KadoEntity {
 
   static SentenceKadoEntity fromJson(Map<String, Object> json) {
     return SentenceKadoEntity(
-      json['wordIds'] as List<String>,
+      List<String>.from(json['wordIds']),
       json['translation'] as String,
       json['learned'] as bool,
       json['id'] as String,
