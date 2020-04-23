@@ -40,7 +40,7 @@ void main() {
           create: (context) => LessonsBloc(
             lessonsRepository: const LessonsConcreteRepository(
               localStorage: const LessonsFileStorage(
-                '__lesson2__',
+                '__lesson3__',
                 getApplicationDocumentsDirectory,
               ),
             ),

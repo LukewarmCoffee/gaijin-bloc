@@ -23,16 +23,19 @@ class LessonsWebClient implements LessonsRepository {
               LessonEntity(
                 'Lesson 1',
                 ['1', '2'],
+                0,
                 '1',
               ),
               LessonEntity(
                 'Lesson 2',
                 ['3', '4', '5'],
+                1,
                 '2',
               ),
               LessonEntity(
                 'Lesson 3',
                 ['6', '7', '8', '9'],
+                0,
                 '3',
               ),
             ]);

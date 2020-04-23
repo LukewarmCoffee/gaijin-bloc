@@ -7,10 +7,30 @@ import '../widgets/widgets.dart';
 import '../models/lesson.dart';
 import '../bloc/bloc.dart';
 
-class LessonDetailsPage extends StatelessWidget {
+class LessonDetailsPage extends StatefulWidget {
   final Lesson lesson;
+  final Function(int) setProgress;
 
-  LessonDetailsPage({@required this.lesson});
+  LessonDetailsPage({@required this.lesson, this.setProgress});
+
+  @override
+  _LessonDetailsPageState createState() => _LessonDetailsPageState();
+}
+
+class _LessonDetailsPageState extends State<LessonDetailsPage> {
+   PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage:  widget.lesson.progress);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +39,19 @@ class LessonDetailsPage extends StatelessWidget {
         if (state is KadosLoading) {
           return LoadingIndicator();
         } else if (state is KadosLoaded) {
-          final List<Kado> kados = lesson.kadoIds
+          final List<Kado> kados = widget.lesson.kadoIds
               .map((kadoId) =>
                   state.kados.firstWhere((kado) => kado.id == kadoId))
               .toList();
           return Scaffold(
             appBar: AppBar(
-              title: Text(lesson.title),
+              title: Text(widget.lesson.title),
             ),
             body: kados == null
                 ? Container()
                 : PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: widget.setProgress,
                     itemCount: kados.length,
                     itemBuilder: (BuildContext context, int index) {
                       final kado = kados[index];

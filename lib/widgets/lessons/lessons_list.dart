@@ -18,19 +18,30 @@ class LessonsList extends StatelessWidget {
             itemCount: lessons.length,
             itemBuilder: (BuildContext context, int index) {
               final lesson = lessons[index];
-              return LessonItem(
-                lesson: lesson,
-                onDismissed: (direction) {
-                  BlocProvider.of<LessonsBloc>(context)
-                      .add(DeleteLesson(lesson));
-                },
-                onTap: () async {
-                  final removedLesson = await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) {
-                      return LessonDetailsPage(lesson: lesson);
-                    }),
-                  );
-                },
+              return Container(
+                color: lesson.progress == lesson.kadoIds.length - 1
+                    ? Colors.red
+                    : Colors.teal,
+                child: LessonItem(
+                  lesson: lesson,
+                  onDismissed: (direction) {
+                    BlocProvider.of<LessonsBloc>(context)
+                        .add(DeleteLesson(lesson));
+                  },
+                  onTap: () async {
+                    final removedLesson = await Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) {
+                        return LessonDetailsPage(
+                          lesson: lesson,
+                          setProgress: (page) =>
+                              BlocProvider.of<LessonsBloc>(context).add(
+                            UpdateLesson(lesson.copyWith(progress: page)),
+                          ),
+                        );
+                      }),
+                    );
+                  },
+                ),
               );
             },
           );

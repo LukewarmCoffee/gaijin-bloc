@@ -68,18 +68,17 @@ class _SentenceKadoItemState extends State<SentenceKadoItem> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    for (Word word in words) Text(word.kana),
+                                    for (Word word in words) Text(word.kana)
                                   ],
                                 ),
                                 Row(
                                   children: <Widget>[
                                     for (Word word in words)
-                                      Text(word.english + ' '),
+                                      Text(word.english + ' ')
                                   ],
                                 ),
                                 Container(
-                                  child: Text(widget.kado.translation ?? ''),
-                                ),
+                                    child: Text(widget.kado.translation ?? '')),
                               ],
                             ),
                     ],
@@ -99,7 +98,7 @@ class _SentenceKadoItemState extends State<SentenceKadoItem> {
                           )
                         : Row(
                             children: <Widget>[
-                              for (Word word in words) Text(word.kana),
+                              for (Word word in words) Text(word.kana)
                             ],
                           ),
                     !english
