@@ -7,9 +7,13 @@ import '../widgets.dart';
 
 class SentenceKadoItem extends StatefulWidget {
   final SentenceKado kado;
+  final Function previousPage;
+  final Function nextPage;
 
   SentenceKadoItem({
     @required this.kado,
+    @required this.nextPage,
+    @required this.previousPage,
   });
 
   @override
@@ -50,72 +54,89 @@ class _SentenceKadoItemState extends State<SentenceKadoItem> {
               .map((wordId) =>
                   state.words.firstWhere((word) => word.id == wordId))
               .toList();
-          return widget.kado.learned
-              ? Center(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
+          return Column(
+            children: <Widget>[
+              widget.kado.learned
+                  ? Center(
+                      child: Column(
                         children: <Widget>[
-                          for (Word word in words) Text(word.japanese),
+                          Row(
+                            children: <Widget>[
+                              for (Word word in words) Text(word.japanese),
+                            ],
+                          ),
+                          !answer
+                              ? RaisedButton(
+                                  child: Text('show answer'),
+                                  onPressed: () => showAnswer(),
+                                )
+                              : Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        for (Word word in words) Text(word.kana)
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        for (Word word in words)
+                                          Text(word.english + ' ')
+                                      ],
+                                    ),
+                                    Container(
+                                        child: Text(
+                                            widget.kado.translation ?? '')),
+                                  ],
+                                ),
                         ],
                       ),
-                      !answer
-                          ? RaisedButton(
-                              child: Text('show answer'),
-                              onPressed: () => showAnswer(),
-                            )
-                          : Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    for (Word word in words) Text(word.kana)
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    for (Word word in words)
-                                      Text(word.english + ' ')
-                                  ],
-                                ),
-                                Container(
-                                    child: Text(widget.kado.translation ?? '')),
-                              ],
-                            ),
-                    ],
-                  ),
-                )
-              : Column(
-                  children: <Widget>[
-                    Row(
+                    )
+                  : Column(
                       children: <Widget>[
-                        for (Word word in words) Text(word.japanese),
+                        Row(
+                          children: <Widget>[
+                            for (Word word in words) Text(word.japanese),
+                          ],
+                        ),
+                        !kana
+                            ? RaisedButton(
+                                child: Text('show kana'),
+                                onPressed: () => showKana(),
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  for (Word word in words) Text(word.kana)
+                                ],
+                              ),
+                        !english
+                            ? RaisedButton(
+                                child: Text('show english'),
+                                onPressed: () => showEnglish(),
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  for (Word word in words) Text(word.english),
+                                ],
+                              ),
+                        Container(
+                          child: Text(widget.kado.translation ?? ''),
+                        ),
                       ],
                     ),
-                    !kana
-                        ? RaisedButton(
-                            child: Text('show kana'),
-                            onPressed: () => showKana(),
-                          )
-                        : Row(
-                            children: <Widget>[
-                              for (Word word in words) Text(word.kana)
-                            ],
-                          ),
-                    !english
-                        ? RaisedButton(
-                            child: Text('show english'),
-                            onPressed: () => showEnglish(),
-                          )
-                        : Row(
-                            children: <Widget>[
-                              for (Word word in words) Text(word.english),
-                            ],
-                          ),
-                    Container(
-                      child: Text(widget.kado.translation ?? ''),
-                    ),
-                  ],
-                );
+              Row(
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('prev'),
+                    onPressed: () => widget.previousPage(),
+                  ),
+                  RaisedButton(
+                    child: Text('next'),
+                  onPressed: () => widget.nextPage(),
+                  ),
+                ],
+              ),
+            ],
+          );
         } else {
           return Container();
         }

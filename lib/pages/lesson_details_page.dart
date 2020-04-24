@@ -32,6 +32,16 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
     super.dispose();
   }
 
+  nextPage() {
+    _pageController.nextPage(
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+  }
+
+  previousPage() {
+    _pageController.previousPage(
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<KadosBloc, KadosState>(
@@ -57,22 +67,29 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
                     itemBuilder: (BuildContext context, int index) {
                       final kado = kados[index];
                       if (kado is TitleKado)
-                        return TitleKadoItem(kado: kado);
+                        return TitleKadoItem(
+                          kado: kado,
+                          previousPage: () => previousPage(),
+                          nextPage: () => nextPage(),
+                        );
                       else if (kado is VocabKado)
-                        return VocabKadoItem(kado: kado);
+                        return VocabKadoItem(
+                          kado: kado,
+                          previousPage: () => previousPage(),
+                          nextPage: () => nextPage(),
+                        );
                       else if (kado is SentenceKado)
-                        return SentenceKadoItem(kado: kado);
+                        return SentenceKadoItem(
+                          kado: kado,
+                          previousPage: () => previousPage(),
+                          nextPage: () => nextPage(),
+                        );
                       else
                         return Container(
                           child: Text('you never should have come here!'),
                         );
                     },
                   ),
-            floatingActionButton: FloatingActionButton(
-              child: Text('next'),
-              onPressed: () => _pageController.nextPage(
-                  duration: Duration(milliseconds: 100), curve: Curves.easeIn),
-            ),
           );
         } else {
           return Container();
