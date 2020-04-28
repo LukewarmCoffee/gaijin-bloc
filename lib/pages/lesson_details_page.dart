@@ -32,7 +32,11 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
     super.dispose();
   }
 
-  nextPage() {
+  nextPage(BuildContext context) {
+    //TODO does not always work
+    if(widget.lesson.kadoIds.length - 1 == widget.lesson.progress)
+      Navigator.of(context).pop();
+    else
     _pageController.nextPage(
         duration: Duration(milliseconds: 100), curve: Curves.easeIn);
   }
@@ -70,19 +74,19 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
                         return TitleKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(),
+                          nextPage: () => nextPage(context),
                         );
                       else if (kado is VocabKado)
                         return VocabKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(),
+                          nextPage: () => nextPage(context),
                         );
                       else if (kado is SentenceKado)
                         return SentenceKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(),
+                          nextPage: () => nextPage(context),
                         );
                       else
                         return Container(

@@ -20,7 +20,7 @@ void main() {
           create: (context) => LessonsBloc(
             lessonsRepository: const LessonsConcreteRepository(
               localStorage: const LessonsFileStorage(
-                '__lessson13__',
+                '__lessson14__',
                 getApplicationDocumentsDirectory,
               ),
             ),
@@ -60,17 +60,19 @@ class GaijinApp extends StatelessWidget {
       theme: MainTheme.theme,
       routes: {
         Routes.home: (context) {
-          return /*MultiBlocProvider(
-            providers: [
-              BlocProvider<StatsBloc>(
-                create: (context) => StatsBloc(
-                  notesBloc: BlocProvider.of<NotesBloc>(context),
-                ),
+          return MultiBlocProvider(providers: [
+            BlocProvider<ProgressBloc>(
+              create: (context) => ProgressBloc(
+                lessonsBloc: BlocProvider.of<LessonsBloc>(context),
               ),
-            ],
-            child:*/
-              HomePage();
-          //);
+            ),
+            BlocProvider<CreateReviewBloc>(
+              create: (context) => CreateReviewBloc(
+                kadosBloc: BlocProvider.of<KadosBloc>(context),
+                wordsBloc: BlocProvider.of<WordsBloc>(context),
+              ),
+            ),
+          ], child: HomePage());
         },
         Routes.addKado: (context) {
           return AddEditPage(
