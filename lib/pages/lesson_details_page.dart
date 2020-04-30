@@ -32,9 +32,8 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
     super.dispose();
   }
 
-  nextPage(BuildContext context) {
-    //TODO does not always work
-    if(widget.lesson.kadoIds.length - 1 == widget.lesson.progress)
+  nextPage(BuildContext context, int index) {
+    if(widget.lesson.kadoIds.length - 1 == index)
       Navigator.of(context).pop();
     else
     _pageController.nextPage(
@@ -74,19 +73,19 @@ class _LessonDetailsPageState extends State<LessonDetailsPage> {
                         return TitleKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(context),
+                          nextPage: () => nextPage(context, index),
                         );
                       else if (kado is VocabKado)
                         return VocabKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(context),
+                          nextPage: () => nextPage(context, index),
                         );
                       else if (kado is SentenceKado)
                         return SentenceKadoItem(
                           kado: kado,
                           previousPage: () => previousPage(),
-                          nextPage: () => nextPage(context),
+                          nextPage: () => nextPage(context, index),
                         );
                       else
                         return Container(

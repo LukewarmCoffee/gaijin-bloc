@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           final lessonKadoIds = state.lessonKadoIds;
           return BlocListener<ProgressBloc, ProgressState>(
             listener: (context, state) {
-              if (state is ProgressLoaded) if (state.lessonNeeded)
+              if (state is ProgressLoaded && state.lessonNeeded)
                 BlocProvider.of<LessonsBloc>(context).add(
                   AddLesson(Lesson(
                     title: 'review',

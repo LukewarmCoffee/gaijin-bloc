@@ -66,6 +66,11 @@ class GaijinApp extends StatelessWidget {
                 lessonsBloc: BlocProvider.of<LessonsBloc>(context),
               ),
             ),
+            BlocProvider<FilteredLessonsBloc>(
+              create: (context) => FilteredLessonsBloc(
+                lessonsBloc: BlocProvider.of<LessonsBloc>(context),
+              ),
+            ),
             BlocProvider<CreateReviewBloc>(
               create: (context) => CreateReviewBloc(
                 kadosBloc: BlocProvider.of<KadosBloc>(context),
