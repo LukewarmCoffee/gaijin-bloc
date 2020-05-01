@@ -51,3 +51,32 @@ class LessonsWebClient implements LessonsRepository {
     return Future.value(true);
   }
 }
+
+class FilteredLessonsWebClient implements LessonsRepository {
+  final Duration delay;
+
+  const FilteredLessonsWebClient([this.delay = const Duration(milliseconds: 1000)]);
+
+  /// Mock that "fetches" some Todos from a "web service" after a short delay
+  @override
+  Future<List<LessonEntity>> loadLessons() async {
+    return Future.delayed(
+        delay,
+        () => [
+              LessonEntity(
+                'Lesson 1',
+                ["1", "2"],
+                0,
+                true,
+                '1',
+              ),
+            ]);
+  }
+
+  /// Mock that returns true or false for success or failure. In this case,
+  /// it will "Always Succeed"
+  @override
+  Future<bool> saveLessons(List<LessonEntity> lessons) async {
+    return Future.value(true);
+  }
+}

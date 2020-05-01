@@ -1,10 +1,12 @@
-
 import 'package:equatable/equatable.dart';
 
 import '../../models/lesson.dart';
 
 abstract class FilteredLessonsEvent extends Equatable {
   const FilteredLessonsEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class UpdateLessons extends FilteredLessonsEvent {
@@ -17,4 +19,9 @@ class UpdateLessons extends FilteredLessonsEvent {
 
   @override
   String toString() => 'UpdateLessons { lessons: $lessons }';
+}
+
+class LoadFilteredLessons extends FilteredLessonsEvent {}
+
+class AddFilteredLesson extends FilteredLessonsEvent {
 }

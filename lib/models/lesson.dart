@@ -8,7 +8,7 @@ class Lesson extends Equatable {
   final String title;
   final List<String> kadoIds;
   final int progress;
-  final bool visible;
+  final bool visible; //TODO deprecated
   final String id;
 
   Lesson({

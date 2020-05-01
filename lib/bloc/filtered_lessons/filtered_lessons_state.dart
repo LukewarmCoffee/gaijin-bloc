@@ -14,8 +14,9 @@ class FilteredLessonsLoading extends FilteredLessonsState {}
 
 class FilteredLessonsLoaded extends FilteredLessonsState {
   final List<Lesson> filteredLessons;
+  final int lessonsIndex;
   
-  const FilteredLessonsLoaded([this.filteredLessons = const[]]);
+  const FilteredLessonsLoaded([this.filteredLessons = const[], this.lessonsIndex]);
 
   @override
   List<Object> get props => [filteredLessons];

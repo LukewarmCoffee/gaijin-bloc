@@ -26,6 +26,17 @@ void main() {
             ),
           )..add(LoadLessons()),
         ),
+        BlocProvider<FilteredLessonsBloc>(
+          create: (context) => FilteredLessonsBloc(
+            lessonsRepository: const FilteredLessonsConcreteRepository(
+              localStorage: const LessonsFileStorage(
+                '__filtered_lesson__',
+                getApplicationDocumentsDirectory,
+              ),
+            ),
+            lessonsBloc: BlocProvider.of<LessonsBloc>(context),
+          )..add(LoadFilteredLessons()),
+        ),
         BlocProvider<KadosBloc>(
           create: (context) => KadosBloc(
             kadosRepository: const KadoConcreteRepository(
@@ -63,11 +74,6 @@ class GaijinApp extends StatelessWidget {
           return MultiBlocProvider(providers: [
             BlocProvider<ProgressBloc>(
               create: (context) => ProgressBloc(
-                lessonsBloc: BlocProvider.of<LessonsBloc>(context),
-              ),
-            ),
-            BlocProvider<FilteredLessonsBloc>(
-              create: (context) => FilteredLessonsBloc(
                 lessonsBloc: BlocProvider.of<LessonsBloc>(context),
               ),
             ),
