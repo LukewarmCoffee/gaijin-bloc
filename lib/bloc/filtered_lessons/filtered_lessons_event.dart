@@ -25,3 +25,12 @@ class LoadFilteredLessons extends FilteredLessonsEvent {}
 
 class AddFilteredLesson extends FilteredLessonsEvent {
 }
+
+class UpdateFilteredLesson extends FilteredLessonsEvent{
+ final Lesson updatedLesson;
+
+  const UpdateFilteredLesson(this.updatedLesson);
+
+  @override
+  String toString() => 'UpdateFilteredLesson { updatedLesson: $updatedLesson }';
+}

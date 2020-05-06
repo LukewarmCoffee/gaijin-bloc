@@ -32,11 +32,37 @@ class FilteredLessonsBloc
       yield* _mapLoadLessonsToState();
     } else if (event is AddFilteredLesson) {
       yield* _mapAddLessonToState(event);
+    } else if (event is UpdateFilteredLesson) {
+      yield* _mapUpdateLessonToState(event);
     }
   }
 
-  //TODO updateState
-  //after update, if progress on last... you know what to do
+  Stream<FilteredLessonsState> _mapUpdateLessonToState(
+      UpdateFilteredLesson event) async* {
+    if (state is FilteredLessonsLoaded) {
+      final List<Lesson> updatedLessons =
+          (state as LessonsLoaded).lessons.map((lesson) {
+        return lesson.id == event.updatedLesson.id
+            ? event.updatedLesson
+            : lesson;
+      }).toList();
+      //progress of last lesson == length of cards
+      if (updatedLessons[updatedLessons.length - 1].progress ==
+          updatedLessons[updatedLessons.length - 1].kadoIds.length - 1) {
+        int lessonIndex = (state as FilteredLessonsLoaded).lessonsIndex;
+        final List<Lesson> lessons =
+            (lessonsBloc.state as LessonsLoaded).lessons;
+
+        if (lessonIndex < lessons.length)
+          updatedLessons.add(lessons[lessonIndex]);
+
+        yield FilteredLessonsLoaded(updatedLessons, lessonIndex + 1);
+      }
+      else
+        yield FilteredLessonsLoaded(updatedLessons, updatedLessons.length);
+      _saveLessons(updatedLessons);
+    }
+  }
 
   //add lesson
   //compare current filtered lessons and lessons, adding any new lessons
@@ -47,10 +73,9 @@ class FilteredLessonsBloc
     int lessonIndex = (state as FilteredLessonsLoaded).lessonsIndex;
     final List<Lesson> lessons = (lessonsBloc.state as LessonsLoaded).lessons;
 
-    if (lessonIndex < lessons.length)
-      filteredLessons.add(lessons[lessonIndex++]);
+    if (lessonIndex < lessons.length) filteredLessons.add(lessons[lessonIndex]);
 
-    yield FilteredLessonsLoaded(filteredLessons, lessonIndex);
+    yield FilteredLessonsLoaded(filteredLessons, lessonIndex + 1);
   }
 
   //load lessons
@@ -58,10 +83,9 @@ class FilteredLessonsBloc
   Stream<FilteredLessonsState> _mapLoadLessonsToState() async* {
     try {
       final lessons = await this.lessonsRepository.loadLessons();
-      yield FilteredLessonsLoaded(
-        lessons.map(Lesson.fromEntity).toList(),
-        1 //index, this will reset every time oops
-      );
+      yield FilteredLessonsLoaded(lessons.map(Lesson.fromEntity).toList(),
+          1 //index, this will reset every time oops
+          );
     } catch (_) {
       yield FilteredLessonsNotLoaded();
     }
@@ -71,5 +95,11 @@ class FilteredLessonsBloc
   Future<void> close() {
     lessonsSubscription.cancel();
     return super.close();
+  }
+
+  Future _saveLessons(List<Lesson> lessons) {
+    return lessonsRepository.saveLessons(
+      lessons.map((lesson) => lesson.toEntity()).toList(),
+    );
   }
 }
