@@ -10,14 +10,25 @@ class FilteredLessonsBloc
     extends Bloc<FilteredLessonsEvent, FilteredLessonsState> {
   final LessonsBloc lessonsBloc;
   StreamSubscription lessonsSubscription;
+  final CreateReviewBloc createReviewBloc;
+  StreamSubscription createSubscription;
   final LessonsRepository lessonsRepository;
 
   FilteredLessonsBloc(
-      {@required this.lessonsBloc, @required this.lessonsRepository}) {
+      {@required this.lessonsBloc,
+      @required this.createReviewBloc,
+      @required this.lessonsRepository}) {
     lessonsSubscription = lessonsBloc.listen((state) {
       /*add lesson here based on progress*/
       if (state is LessonsLoaded) {
         add(UpdateLessons((lessonsBloc.state as LessonsLoaded).lessons));
+      }
+    });
+
+    createSubscription = createReviewBloc.listen((state) {
+      if (state is CreateReviewLoaded) {
+        add(UpdateCreateReviewKados(
+            (createReviewBloc.state as CreateReviewLoaded).lessonKadoIds));
       }
     });
   }
@@ -41,7 +52,7 @@ class FilteredLessonsBloc
       UpdateFilteredLesson event) async* {
     if (state is FilteredLessonsLoaded) {
       final List<Lesson> updatedLessons =
-          (state as LessonsLoaded).lessons.map((lesson) {
+          (state as FilteredLessonsLoaded).filteredLessons.map((lesson) {
         return lesson.id == event.updatedLesson.id
             ? event.updatedLesson
             : lesson;
@@ -55,10 +66,19 @@ class FilteredLessonsBloc
 
         if (lessonIndex < lessons.length)
           updatedLessons.add(lessons[lessonIndex]);
+        else {
+          List<String> kadoIds =
+              (createReviewBloc.state as CreateReviewLoaded).lessonKadoIds;
+          updatedLessons.add(
+            Lesson(
+              title: 'review',
+              kadoIds: kadoIds,
+            ),
+          );
+        }
 
         yield FilteredLessonsLoaded(updatedLessons, lessonIndex + 1);
-      }
-      else
+      } else
         yield FilteredLessonsLoaded(updatedLessons, updatedLessons.length);
       _saveLessons(updatedLessons);
     }

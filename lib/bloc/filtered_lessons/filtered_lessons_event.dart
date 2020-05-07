@@ -21,6 +21,18 @@ class UpdateLessons extends FilteredLessonsEvent {
   String toString() => 'UpdateLessons { lessons: $lessons }';
 }
 
+class UpdateCreateReviewKados extends FilteredLessonsEvent{
+  final List<String> kadoIds;
+
+  const UpdateCreateReviewKados(this.kadoIds);
+
+  @override
+  List<Object> get props => [kadoIds];
+
+  @override
+  String toString() => 'UpdateKadoIds { kadoIds: $kadoIds }';
+}
+
 class LoadFilteredLessons extends FilteredLessonsEvent {}
 
 class AddFilteredLesson extends FilteredLessonsEvent {

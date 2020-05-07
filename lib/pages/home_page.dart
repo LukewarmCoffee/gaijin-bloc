@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
               appBar: AppBar(
                 title: Text('Lessons'),
               ),
-              body: LessonsList(),
+              body: FilteredLessonsList(),//LessonsList(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.addKado);

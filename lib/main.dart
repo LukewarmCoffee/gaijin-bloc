@@ -20,22 +20,11 @@ void main() {
           create: (context) => LessonsBloc(
             lessonsRepository: const LessonsConcreteRepository(
               localStorage: const LessonsFileStorage(
-                '__lessson14__',
+                '__lessson15__',
                 getApplicationDocumentsDirectory,
               ),
             ),
           )..add(LoadLessons()),
-        ),
-        BlocProvider<FilteredLessonsBloc>(
-          create: (context) => FilteredLessonsBloc(
-            lessonsRepository: const FilteredLessonsConcreteRepository(
-              localStorage: const LessonsFileStorage(
-                '__filtered_lesson__',
-                getApplicationDocumentsDirectory,
-              ),
-            ),
-            lessonsBloc: BlocProvider.of<LessonsBloc>(context),
-          )..add(LoadFilteredLessons()),
         ),
         BlocProvider<KadosBloc>(
           create: (context) => KadosBloc(
@@ -57,6 +46,24 @@ void main() {
             ),
           )..add(LoadWords()),
         ),
+        BlocProvider<CreateReviewBloc>(
+          create: (context) => CreateReviewBloc(
+            kadosBloc: BlocProvider.of<KadosBloc>(context),
+            wordsBloc: BlocProvider.of<WordsBloc>(context),
+          ),
+        ),
+        BlocProvider<FilteredLessonsBloc>(
+          create: (context) => FilteredLessonsBloc(
+            lessonsRepository: const FilteredLessonsConcreteRepository(
+              localStorage: const LessonsFileStorage(
+                '__filtered_lesson_2__',
+                getApplicationDocumentsDirectory,
+              ),
+            ),
+            lessonsBloc: BlocProvider.of<LessonsBloc>(context),
+            createReviewBloc: BlocProvider.of<CreateReviewBloc>(context),
+          )..add(LoadFilteredLessons()),
+        ),
       ],
       child: GaijinApp(),
     ),
@@ -75,12 +82,6 @@ class GaijinApp extends StatelessWidget {
             BlocProvider<ProgressBloc>(
               create: (context) => ProgressBloc(
                 lessonsBloc: BlocProvider.of<LessonsBloc>(context),
-              ),
-            ),
-            BlocProvider<CreateReviewBloc>(
-              create: (context) => CreateReviewBloc(
-                kadosBloc: BlocProvider.of<KadosBloc>(context),
-                wordsBloc: BlocProvider.of<WordsBloc>(context),
               ),
             ),
           ], child: HomePage());
