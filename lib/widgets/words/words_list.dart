@@ -25,7 +25,7 @@ class WordsList extends StatelessWidget {
                       .add(DeleteWord(word));
                 },
                 onTap: () async {
-                  final removedWord = await Navigator.of(context).push(
+                  await Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) {
                       return WordDetailsPage(id: word.id);
                     }),

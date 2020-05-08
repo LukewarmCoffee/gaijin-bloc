@@ -85,7 +85,6 @@ class _SentenceKadoItemState extends State<SentenceKadoItem> {
                                   ),
                             onTap: () => switchGood(word.id),
                           )
-                        //Text(word.japanese),
                       ],
                     ),
                     Row(
@@ -152,90 +151,6 @@ class _SentenceKadoItemState extends State<SentenceKadoItem> {
                     )
                   ],
                 );
-
-          /*Column(
-            children: <Widget>[
-              widget.kado.learned
-                  ? Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              for (Word word in words) Text(word.japanese),
-                            ],
-                          ),
-                          !answer
-                              ? RaisedButton(
-                                  child: Text('show answer'),
-                                  onPressed: () => showAnswer(),
-                                )
-                              : Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        for (Word word in words) Text(word.kana)
-                                      ],
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        for (Word word in words)
-                                          Text(word.english + ' ')
-                                      ],
-                                    ),
-                                    Container(
-                                        child: Text(
-                                            widget.kado.translation ?? '')),
-                                  ],
-                                ),
-                        ],
-                      ),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            for (Word word in words) Text(word.japanese),
-                          ],
-                        ),
-                        !kana
-                            ? RaisedButton(
-                                child: Text('show kana'),
-                                onPressed: () => showKana(),
-                              )
-                            : Row(
-                                children: <Widget>[
-                                  for (Word word in words) Text(word.kana)
-                                ],
-                              ),
-                        !english
-                            ? RaisedButton(
-                                child: Text('show english'),
-                                onPressed: () => showEnglish(),
-                              )
-                            : Row(
-                                children: <Widget>[
-                                  for (Word word in words) Text(word.english),
-                                ],
-                              ),
-                        Container(
-                          child: Text(widget.kado.translation ?? ''),
-                        ),
-                      ],
-                    ),
-              Row(
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('prev'),
-                    onPressed: () => widget.previousPage(),
-                  ),
-                  RaisedButton(
-                    child: Text('next'),
-                  onPressed: () => widget.nextPage(),
-                  ),
-                ],
-              ),
-            ],
-          );*/
         } else {
           return Container();
         }

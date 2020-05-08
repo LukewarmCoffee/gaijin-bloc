@@ -8,7 +8,7 @@ class Lesson extends Equatable {
   final String title;
   final List<String> kadoIds;
   final int progress;
-  final bool completed; //TODO deprecated
+  final bool completed;
   final String id;
 
   Lesson({
@@ -25,13 +25,13 @@ class Lesson extends Equatable {
       {String title,
       List<String> kadoIds,
       int progress,
-      bool visible,
+      bool completed,
       String id}) {
     return Lesson(
       title: title ?? this.title,
       kadoIds: kadoIds ?? this.kadoIds,
       progress: progress ?? this.progress,
-      completed: visible ?? this.completed,
+      completed: completed ?? this.completed,
       id: id ?? this.id,
     );
   }

@@ -19,9 +19,7 @@ class FilteredLessonsList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final lesson = lessons[index];
               return Container(
-                color: lesson.progress == lesson.kadoIds.length - 1
-                    ? Colors.red
-                    : Colors.teal,
+                color: lesson.completed ? Colors.teal : Colors.red,
                 child: LessonItem(
                   lesson: lesson,
                   onDismissed: (direction) {
@@ -29,15 +27,20 @@ class FilteredLessonsList extends StatelessWidget {
                         .add(DeleteLesson(lesson));
                   },
                   onTap: () async {
-                    final removedLesson = await Navigator.of(context).push(
+                    await Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) {
                         return LessonDetailsPage(
-                          lesson: lesson,
-                          setProgress: (page) =>
-                              BlocProvider.of<FilteredLessonsBloc>(context).add(
-                            UpdateFilteredLesson(lesson.copyWith(progress: page)),
-                          ),
-                        );
+                            lesson: lesson,
+                            setProgress: (page) {
+                              if (page == lesson.kadoIds.length - 1)
+                                BlocProvider.of<FilteredLessonsBloc>(context)
+                                    .add(UpdateFilteredLesson(lesson.copyWith(
+                                        progress: page, completed: true)));
+                              else if (page < lesson.kadoIds.length - 1)
+                                BlocProvider.of<FilteredLessonsBloc>(context)
+                                    .add(UpdateFilteredLesson(
+                                        lesson.copyWith(progress: page)));
+                            });
                       }),
                     );
                   },

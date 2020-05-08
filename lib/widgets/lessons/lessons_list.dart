@@ -29,7 +29,7 @@ class LessonsList extends StatelessWidget {
                         .add(DeleteLesson(lesson));
                   },
                   onTap: () async {
-                    final removedLesson = await Navigator.of(context).push(
+                    await Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) {
                         return LessonDetailsPage(
                           lesson: lesson,
