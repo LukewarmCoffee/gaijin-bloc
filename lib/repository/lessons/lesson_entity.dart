@@ -2,17 +2,17 @@ class LessonEntity {
   final String title;
   final List<String> kadoIds;
   final int progress;
-  final bool visible;
+  final bool completed;
   final String id;
 
-  LessonEntity(this.title, this.kadoIds, this.progress, this.visible, this.id);
+  LessonEntity(this.title, this.kadoIds, this.progress, this.completed, this.id);
 
   @override
   int get hashCode =>
       title.hashCode ^
       kadoIds.hashCode ^
       progress.hashCode ^
-      visible.hashCode ^
+      completed.hashCode ^
       id.hashCode;
 
   @override
@@ -23,7 +23,7 @@ class LessonEntity {
           title == other.title &&
           kadoIds == other.kadoIds &&
           progress == other.progress &&
-          visible == other.visible &&
+          completed == other.completed &&
           id == other.id;
 
   Map<String, dynamic> toJson() {
@@ -31,14 +31,14 @@ class LessonEntity {
       'title': title,
       'kadoIds': kadoIds,
       'progress': progress,
-      'visible': visible,
+      'completed': completed,
       'id': id
     };
   }
 
   @override
   String toString() {
-    return 'LessonEntity { title: $title, kadoIds: $kadoIds , progress: $progress, visible: $visible, id: $id }';
+    return 'LessonEntity { title: $title, kadoIds: $kadoIds , progress: $progress, completed: $completed, id: $id }';
   }
 
   static LessonEntity fromJson(Map<String, dynamic> json) {
@@ -46,7 +46,7 @@ class LessonEntity {
       json['title'] as String,
       List<String>.from(json['kadoIds']),
       json['progress'] as int,
-      json['visible'] as bool,
+      json['completed'] as bool,
       json['id'] as String,
     );
   }

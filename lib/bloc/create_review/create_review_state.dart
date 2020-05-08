@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import '../../models/kado.dart';
 
 abstract class  CreateReviewState extends Equatable {
   const CreateReviewState();

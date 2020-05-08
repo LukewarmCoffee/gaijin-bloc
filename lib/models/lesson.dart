@@ -8,17 +8,17 @@ class Lesson extends Equatable {
   final String title;
   final List<String> kadoIds;
   final int progress;
-  final bool visible; //TODO deprecated
+  final bool completed; //TODO deprecated
   final String id;
 
   Lesson({
     @required this.title,
     @required this.kadoIds,
     int progress = 0,
-    bool visible = false,
+    bool completed = false,
     String id,
   })  : this.progress = progress ?? 0,
-        this.visible = visible ?? false,
+        this.completed = completed ?? false,
         this.id = id ?? Uuid().v4();
 
   Lesson copyWith(
@@ -31,21 +31,21 @@ class Lesson extends Equatable {
       title: title ?? this.title,
       kadoIds: kadoIds ?? this.kadoIds,
       progress: progress ?? this.progress,
-      visible: visible ?? this.visible,
+      completed: visible ?? this.completed,
       id: id ?? this.id,
     );
   }
 
   @override
-  List<Object> get props => [title, kadoIds, progress, visible, id];
+  List<Object> get props => [title, kadoIds, progress, completed, id];
 
   @override
   String toString() {
-    return 'Lesson { title: $title, kadoIds: $kadoIds , progress: $progress, visible: $visible, id: $id }';
+    return 'Lesson { title: $title, kadoIds: $kadoIds , progress: $progress, completed: $completed, id: $id }';
   }
 
   LessonEntity toEntity() {
-    return LessonEntity(title, kadoIds, progress, visible, id);
+    return LessonEntity(title, kadoIds, progress, completed, id);
   }
 
   static Lesson fromEntity(LessonEntity entity) {
@@ -53,7 +53,7 @@ class Lesson extends Equatable {
       title: entity.title,
       kadoIds: entity.kadoIds,
       progress: entity.progress ?? 0,
-      visible: entity.visible ?? false,
+      completed: entity.completed ?? false,
       id: entity.id ?? Uuid().v4(),
     );
   }

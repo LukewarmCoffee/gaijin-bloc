@@ -78,13 +78,7 @@ class GaijinApp extends StatelessWidget {
       theme: MainTheme.theme,
       routes: {
         Routes.home: (context) {
-          return MultiBlocProvider(providers: [
-            BlocProvider<ProgressBloc>(
-              create: (context) => ProgressBloc(
-                lessonsBloc: BlocProvider.of<LessonsBloc>(context),
-              ),
-            ),
-          ], child: HomePage());
+          return HomePage();//MultiBlocProvider(providers: [], child: HomePage());
         },
         Routes.addKado: (context) {
           return AddEditPage(

@@ -24,7 +24,7 @@ class LessonsWebClient implements LessonsRepository {
                 'Lesson 1',
                 ["1", "2"],
                 0,
-                true,
+                false,
                 '1',
               ),
               LessonEntity(
@@ -67,7 +67,7 @@ class FilteredLessonsWebClient implements LessonsRepository {
                 'Lesson 1',
                 ["1", "2"],
                 0,
-                true,
+                false,
                 '1',
               ),
             ]);

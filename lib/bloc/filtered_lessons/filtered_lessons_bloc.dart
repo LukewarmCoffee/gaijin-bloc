@@ -47,7 +47,10 @@ class FilteredLessonsBloc
       yield* _mapUpdateLessonToState(event);
     }
   }
-
+  //most important part of filtered lessons
+  //updates lesson
+  //if the last lesson's progress is finished, then it makes a new lesson
+  //the new lesson
   Stream<FilteredLessonsState> _mapUpdateLessonToState(
       UpdateFilteredLesson event) async* {
     if (state is FilteredLessonsLoaded) {
@@ -114,6 +117,7 @@ class FilteredLessonsBloc
   @override
   Future<void> close() {
     lessonsSubscription.cancel();
+    createSubscription.cancel();
     return super.close();
   }
 
